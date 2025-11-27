@@ -47,69 +47,69 @@ Berikut adalah struktur tabel yang digunakan dalam `db_taskmanager`:
 
 Struktur kode dipisahkan berdasarkan tanggung jawabnya masing-masing:
 
-TP10/
-├── config/
-│   └── Database.php          # Wrapper koneksi PDO MySQL
-├── models/                   # (Model) Query SQL langsung
-│   ├── Category.php
-│   ├── Comment.php
-│   ├── Task.php
-│   └── User.php
-├── viewmodels/               # (ViewModel) Logika Bisnis & Penghubung
-│   ├── CategoryViewModel.php
-│   ├── CommentViewModel.php
-│   ├── TaskViewModel.php
-│   └── UserViewModel.php
-├── views/                    # (View) Tampilan HTML
-│   ├── template/
-│   │   ├── header.php
-│   │   └── footer.php
-│   ├── category_form.php
-│   ├── category_list.php
-│   ├── task_form.php
-│   ├── task_list.php
-│   ├── user_form.php
-│   ├── user_list.php
-│   ├── comment_form.php
-│   └── comment_list.php
-├── index.php                 # Entry Point & Routing
-└── README.md                 # Dokumentasi Proyek
+TP10/<br>
+├── config/<br>
+│   └── Database.php          # Wrapper koneksi PDO MySQL<br>
+├── models/                   # (Model) Query SQL langsung<br>
+│   ├── Category.php<br>
+│   ├── Comment.php<br>
+│   ├── Task.php<br>
+│   └── User.php<br>
+├── viewmodels/               # (ViewModel) Logika Bisnis & Penghubung<br>
+│   ├── CategoryViewModel.php<br>
+│   ├── CommentViewModel.php<br>
+│   ├── TaskViewModel.php<br>
+│   └── UserViewModel.php<br>
+├── views/                    # (View) Tampilan HTML<br>
+│   ├── template/<br>
+│   │   ├── header.php<br>
+│   │   └── footer.php<br>
+│   ├── category_form.php<br>
+│   ├── category_list.php<br>
+│   ├── task_form.php<br>
+│   ├── task_list.php<br>
+│   ├── user_form.php<br>
+│   ├── user_list.php<br>
+│   ├── comment_form.php<br>
+│   └── comment_list.php<br>
+├── index.php                 # Entry Point & Routing<br>
+└── README.md                 # Dokumentasi Proyek<br>
 
 <h2>🚀 Detail Fitur</h2>
-A. Manajemen Tugas (Tasks)
-* Read: Menampilkan daftar tugas dengan JOIN tabel Users dan Categories untuk menampilkan nama (bukan ID).
-* Create: Form input menggunakan Dropdown (Select Option) yang datanya diambil dinamis dari tabel referensi.
-* Update: Mengedit status tugas (Pending, In Progress, Completed) dan detail lainnya.
-* Delete: Menghapus tugas dari database.
 
-B. Manajemen Master Data
-* Users: Menambah, mengedit, dan menghapus data staff/admin.
-* Categories: Manajemen label tugas beserta kode warna (Hex Color) untuk visualisasi.
+A. Manajemen Tugas (Tasks)<br>
+* Read: Menampilkan daftar tugas dengan JOIN tabel Users dan Categories untuk menampilkan nama (bukan ID).<br>
+* Create: Form input menggunakan Dropdown (Select Option) yang datanya diambil dinamis dari tabel referensi.<br>
+* Update: Mengedit status tugas (Pending, In Progress, Completed) dan detail lainnya.<br>
+* Delete: Menghapus tugas dari database.<br>
 
-C. Komentar
-* Relasi: Komentar terikat pada ID tugas tertentu.
-* View: Tombol "Lihat Komentar" pada setiap tugas untuk melihat riwayat diskusi.
+B. Manajemen Master Data<br>
+* Users: Menambah, mengedit, dan menghapus data staff/admin.<br>
+* Categories: Manajemen label tugas beserta kode warna (Hex Color) untuk visualisasi.<br>
+
+C. Komentar<br>
+* Relasi: Komentar terikat pada ID tugas tertentu.<br>
+* View: Tombol "Lihat Komentar" pada setiap tugas untuk melihat riwayat diskusi.<br>
 
 <h2>⚙️ Cara Menjalankan</h2>
-Persiapan Database:
-* Buat database baru di phpMyAdmin dengan nama db_taskmanager.
-* Impor file SQL yang disediakan (atau copy query SQL pembuatan tabel).
-* Pastikan tabel users, categories, tasks, dan comments sudah terbentuk.
 
-Konfigurasi Koneksi:
-* Buka file config/Database.php.
-* Sesuaikan konfigurasi berikut:
+Persiapan Database:<br>
+* Buat database baru di phpMyAdmin dengan nama db_taskmanager.<br>
+* Impor file SQL yang disediakan (atau copy query SQL pembuatan tabel).<br>
+* Pastikan tabel users, categories, tasks, dan comments sudah terbentuk.<br>
 
-PHP
-private $host = "localhost";
-private $db_name = "db_taskmanager";
-private $username = "root"; // Sesuaikan user db
-private $password = "";     // Sesuaikan password db
+Konfigurasi Koneksi:<br>
+* Buka file config/Database.php.<br>
+* Sesuaikan konfigurasi berikut:<br>
 
-Jalankan Aplikasi:
+PHP<br>
+private $host = "localhost";<br>
+private $db_name = "db_taskmanager";<br>
+private $username = "root"; // Sesuaikan user db<br>
+private $password = "";     // Sesuaikan password db<br>
 
-Simpan folder proyek di dalam htdocs (jika menggunakan XAMPP).
+Jalankan Aplikasi:<br>
+Simpan folder proyek di dalam htdocs (jika menggunakan XAMPP).<br>
+Buka browser dan akses URL: http://localhost/TP10/index.php<br>
 
-Buka browser dan akses URL: http://localhost/TP10/index.php
-
-🎮 Tampilan Program
+🎮 Tampilan Program<br>
