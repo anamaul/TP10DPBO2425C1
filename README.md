@@ -113,3 +113,5 @@ Simpan folder proyek di dalam htdocs (jika menggunakan XAMPP).<br>
 Buka browser dan akses URL: http://localhost/TP10/index.php<br>
 
 🎮 Tampilan Program<br>
+
+https://github.com/user-attachments/assets/08a95c94-fd20-4f85-95a7-13acf2173893
