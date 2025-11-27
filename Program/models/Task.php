@@ -1,19 +1,19 @@
 <?php
 require_once "config/Database.php";
 
-class Task
+class Task//Task.php
 {
   private $conn;
-  private $table = "tasks";
-
+  private $table = "tasks";//Table name
+//Constructor to initialize database connection
   public function __construct()
   {
     $database = new Database();
     $this->conn = $database->getConnection();
   }
-
+//CRUD operations for Task
   public function getAll()
-  {
+  {//Retrieve all tasks
     // Relasi ke User dan Category
     $query = "SELECT t.*, u.name as user_name, c.name as category_name 
                   FROM " . $this->table . " t
@@ -25,7 +25,7 @@ class Task
   }
 
   public function getById($id)
-  {
+  {//Retrieve a task by ID
     $query = "SELECT * FROM " . $this->table . " WHERE id = :id";
     $stmt = $this->conn->prepare($query);
     $stmt->bindParam(':id', $id);
@@ -34,7 +34,7 @@ class Task
   }
 
   public function create($title, $description, $status, $user_id, $category_id)
-  {
+  {//Create a new task
     $query = "INSERT INTO " . $this->table . " (title, description, status, user_id, category_id) 
                   VALUES (:title, :description, :status, :user_id, :category_id)";
     $stmt = $this->conn->prepare($query);
@@ -47,7 +47,7 @@ class Task
   }
 
   public function update($id, $title, $description, $status, $user_id, $category_id)
-  {
+  {//Update an existing task
     $query = "UPDATE " . $this->table . " 
                   SET title=:title, description=:description, status=:status, user_id=:user_id, category_id=:category_id 
                   WHERE id=:id";
@@ -62,7 +62,7 @@ class Task
   }
 
   public function delete($id)
-  {
+  {//Delete a task
     $query = "DELETE FROM " . $this->table . " WHERE id = :id";
     $stmt = $this->conn->prepare($query);
     $stmt->bindParam(':id', $id);

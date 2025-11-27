@@ -1,19 +1,19 @@
 <?php
 require_once "config/Database.php";
 
-class Category
+class Category//Category.php
 {
   private $conn;
-  private $table = "categories";
+  private $table = "categories";//Table name
 
-  public function __construct()
+  public function __construct()//Constructor to initialize database connection
   {
     $database = new Database();
     $this->conn = $database->getConnection();
   }
-
+//CRUD operations for Category
   public function getAll()
-  {
+  {//Retrieve all categories
     $query = "SELECT * FROM " . $this->table;
     $stmt = $this->conn->prepare($query);
     $stmt->execute();
@@ -21,7 +21,7 @@ class Category
   }
 
   public function getById($id)
-  {
+  {//Retrieve a category by ID
     $query = "SELECT * FROM " . $this->table . " WHERE id = :id";
     $stmt = $this->conn->prepare($query);
     $stmt->bindParam(':id', $id);
@@ -30,7 +30,7 @@ class Category
   }
 
   public function create($name, $color)
-  {
+  {//Create a new category
     $query = "INSERT INTO " . $this->table . " (name, color) VALUES (:name, :color)";
     $stmt = $this->conn->prepare($query);
     $stmt->bindParam(':name', $name);
@@ -39,7 +39,7 @@ class Category
   }
 
   public function update($id, $name, $color)
-  {
+  {//Update an existing category
     $query = "UPDATE " . $this->table . " SET name = :name, color = :color WHERE id = :id";
     $stmt = $this->conn->prepare($query);
     $stmt->bindParam(':id', $id);
@@ -49,7 +49,7 @@ class Category
   }
 
   public function delete($id)
-  {
+  {//Delete a category
     $query = "DELETE FROM " . $this->table . " WHERE id = :id";
     $stmt = $this->conn->prepare($query);
     $stmt->bindParam(':id', $id);
