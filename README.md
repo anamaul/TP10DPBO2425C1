@@ -3,7 +3,7 @@ Saya Muhammad Maulana Adrian dengan NIM 2408647 mengerjakan Tugas Praktikum 10
 dalam mata kuliah Desain Pemrograman Berbasis Objek untuk keberkahanNya maka
 saya tidak melakukan kecurangan seperti yang telah dispesifikasikan. Aamiin
 
-## 🌐 Deskripsi Proyek
+<h2>🌐 Deskripsi Proyek</h2>
 
 Proyek ini adalah aplikasi web sederhana untuk memanajemen Tugas (**Task Manager**) yang mencakup pengelolaan data **Pengguna** (Users), **Kategori** (Categories), **Tugas** (Tasks), dan **Komentar** (Comments). Aplikasi ini dibangun menggunakan **PHP Native** dan database **MySQL**.
 
@@ -47,7 +47,6 @@ Berikut adalah struktur tabel yang digunakan dalam `db_taskmanager`:
 
 Struktur kode dipisahkan berdasarkan tanggung jawabnya masing-masing:
 
-```text
 TP10/
 ├── config/
 │   └── Database.php          # Wrapper koneksi PDO MySQL
@@ -75,47 +74,38 @@ TP10/
 │   └── comment_list.php
 ├── index.php                 # Entry Point & Routing
 └── README.md                 # Dokumentasi Proyek
-🚀 Detail Fitur
+
+<h2>🚀 Detail Fitur</h2>
 A. Manajemen Tugas (Tasks)
-Read: Menampilkan daftar tugas dengan JOIN tabel Users dan Categories untuk menampilkan nama (bukan ID).
-
-Create: Form input menggunakan Dropdown (Select Option) yang datanya diambil dinamis dari tabel referensi.
-
-Update: Mengedit status tugas (Pending, In Progress, Completed) dan detail lainnya.
-
-Delete: Menghapus tugas dari database.
+* Read: Menampilkan daftar tugas dengan JOIN tabel Users dan Categories untuk menampilkan nama (bukan ID).
+* Create: Form input menggunakan Dropdown (Select Option) yang datanya diambil dinamis dari tabel referensi.
+* Update: Mengedit status tugas (Pending, In Progress, Completed) dan detail lainnya.
+* Delete: Menghapus tugas dari database.
 
 B. Manajemen Master Data
-Users: Menambah, mengedit, dan menghapus data staff/admin.
-
-Categories: Manajemen label tugas beserta kode warna (Hex Color) untuk visualisasi.
+* Users: Menambah, mengedit, dan menghapus data staff/admin.
+* Categories: Manajemen label tugas beserta kode warna (Hex Color) untuk visualisasi.
 
 C. Komentar
-Relasi: Komentar terikat pada ID tugas tertentu.
+* Relasi: Komentar terikat pada ID tugas tertentu.
+* View: Tombol "Lihat Komentar" pada setiap tugas untuk melihat riwayat diskusi.
 
-View: Tombol "Lihat Komentar" pada setiap tugas untuk melihat riwayat diskusi.
-
-⚙️ Cara Menjalankan
+<h2>⚙️ Cara Menjalankan</h2>
 Persiapan Database:
-
-Buat database baru di phpMyAdmin dengan nama db_taskmanager.
-
-Impor file SQL yang disediakan (atau copy query SQL pembuatan tabel).
-
-Pastikan tabel users, categories, tasks, dan comments sudah terbentuk.
+* Buat database baru di phpMyAdmin dengan nama db_taskmanager.
+* Impor file SQL yang disediakan (atau copy query SQL pembuatan tabel).
+* Pastikan tabel users, categories, tasks, dan comments sudah terbentuk.
 
 Konfigurasi Koneksi:
-
-Buka file config/Database.php.
-
-Sesuaikan konfigurasi berikut:
+* Buka file config/Database.php.
+* Sesuaikan konfigurasi berikut:
 
 PHP
-
 private $host = "localhost";
 private $db_name = "db_taskmanager";
 private $username = "root"; // Sesuaikan user db
 private $password = "";     // Sesuaikan password db
+
 Jalankan Aplikasi:
 
 Simpan folder proyek di dalam htdocs (jika menggunakan XAMPP).
@@ -123,9 +113,3 @@ Simpan folder proyek di dalam htdocs (jika menggunakan XAMPP).
 Buka browser dan akses URL: http://localhost/TP10/index.php
 
 🎮 Tampilan Program
-<div align="center"> <p><strong>Daftar Tugas (Task List)</strong></p> <img src="assets/screenshot_list.png" alt="Daftar Tugas" width="80%" style="border: 1px solid #ddd; border-radius: 5px;"/>
-
-
-
-<p><strong>Form Tambah/Edit Tugas</strong></p> <img src="assets/screenshot_form.png" alt="Form Input" width="80%" style="border: 1px solid #ddd; border-radius: 5px;"/> </div>
-```
