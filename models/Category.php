@@ -1,51 +1,58 @@
 <?php
+require_once "config/Database.php";
+
 class Category
 {
   private $conn;
-  private $table_name = "categories";
+  private $table = "categories";
 
-  public $id;
-  public $name;
-  public $color;
-
-  public function __construct($db)
+  public function __construct()
   {
-    $this->conn = $db;
+    $database = new Database();
+    $this->conn = $database->getConnection();
   }
 
-  public function read()
+  public function getAll()
   {
-    $query = "SELECT * FROM " . $this->table_name . " ORDER BY id DESC";
+    $query = "SELECT * FROM " . $this->table;
     $stmt = $this->conn->prepare($query);
     $stmt->execute();
-    return $stmt;
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
 
-  public function create()
+  public function getById($id)
   {
-    $query = "INSERT INTO " . $this->table_name . " SET name=:name, color=:color";
+    $query = "SELECT * FROM " . $this->table . " WHERE id = :id";
     $stmt = $this->conn->prepare($query);
-    $stmt->bindParam(":name", $this->name);
-    $stmt->bindParam(":color", $this->color);
+    $stmt->bindParam(':id', $id);
+    $stmt->execute();
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+  }
+
+  public function create($name, $color)
+  {
+    $query = "INSERT INTO " . $this->table . " (name, color) VALUES (:name, :color)";
+    $stmt = $this->conn->prepare($query);
+    $stmt->bindParam(':name', $name);
+    $stmt->bindParam(':color', $color);
     return $stmt->execute();
   }
 
-  public function update()
+  public function update($id, $name, $color)
   {
-    $query = "UPDATE " . $this->table_name . " SET name=:name, color=:color WHERE id = :id";
+    $query = "UPDATE " . $this->table . " SET name = :name, color = :color WHERE id = :id";
     $stmt = $this->conn->prepare($query);
-    $stmt->bindParam(":name", $this->name);
-    $stmt->bindParam(":color", $this->color);
-    $stmt->bindParam(":id", $this->id);
-    return $stmt->execute();
-  }
-  public function delete()
-  {
-    $query = "DELETE FROM " . $this->table_name . " WHERE id = :id";
-    $stmt = $this->conn->prepare($query);
-    $stmt->bindParam(":id", $this->id);
+    $stmt->bindParam(':id', $id);
+    $stmt->bindParam(':name', $name);
+    $stmt->bindParam(':color', $color);
     return $stmt->execute();
   }
 
+  public function delete($id)
+  {
+    $query = "DELETE FROM " . $this->table . " WHERE id = :id";
+    $stmt = $this->conn->prepare($query);
+    $stmt->bindParam(':id', $id);
+    return $stmt->execute();
+  }
 }
-?>

@@ -1,90 +1,71 @@
 <?php
+require_once "config/Database.php";
+
 class Task
 {
   private $conn;
-  private $table_name = "tasks";
+  private $table = "tasks";
 
-  // Properti Data
-  public $id;
-  public $title;
-  public $description;
-  public $status;
-  public $user_id;
-  public $category_id;
-
-  public function __construct($db)
+  public function __construct()
   {
-    $this->conn = $db;
+    $database = new Database();
+    $this->conn = $database->getConnection();
   }
 
-  // Read dengan Relasi (JOIN)
-  public function read()
+  public function getAll()
   {
+    // Relasi ke User dan Category
     $query = "SELECT t.*, u.name as user_name, c.name as category_name 
-                  FROM " . $this->table_name . " t
+                  FROM " . $this->table . " t
                   LEFT JOIN users u ON t.user_id = u.id
-                  LEFT JOIN categories c ON t.category_id = c.id
-                  ORDER BY t.id DESC";
+                  LEFT JOIN categories c ON t.category_id = c.id";
     $stmt = $this->conn->prepare($query);
     $stmt->execute();
-    return $stmt;
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
 
-  public function readOne()
+  public function getById($id)
   {
-    $query = "SELECT * FROM " . $this->table_name . " WHERE id = ? LIMIT 0,1";
+    $query = "SELECT * FROM " . $this->table . " WHERE id = :id";
     $stmt = $this->conn->prepare($query);
-    $stmt->bindParam(1, $this->id);
+    $stmt->bindParam(':id', $id);
     $stmt->execute();
-    $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    // Data Binding Manual ke Object
-    $this->title = $row['title'];
-    $this->description = $row['description'];
-    $this->status = $row['status'];
-    $this->user_id = $row['user_id'];
-    $this->category_id = $row['category_id'];
+    return $stmt->fetch(PDO::FETCH_ASSOC);
   }
 
-  public function create()
+  public function create($title, $description, $status, $user_id, $category_id)
   {
-    $query = "INSERT INTO " . $this->table_name . " 
-                  SET title=:title, description=:description, status=:status, user_id=:user_id, category_id=:category_id";
+    $query = "INSERT INTO " . $this->table . " (title, description, status, user_id, category_id) 
+                  VALUES (:title, :description, :status, :user_id, :category_id)";
     $stmt = $this->conn->prepare($query);
-
-    // Sanitasi dan Bind
-    $stmt->bindParam(":title", $this->title);
-    $stmt->bindParam(":description", $this->description);
-    $stmt->bindParam(":status", $this->status);
-    $stmt->bindParam(":user_id", $this->user_id);
-    $stmt->bindParam(":category_id", $this->category_id);
-
+    $stmt->bindParam(':title', $title);
+    $stmt->bindParam(':description', $description);
+    $stmt->bindParam(':status', $status);
+    $stmt->bindParam(':user_id', $user_id);
+    $stmt->bindParam(':category_id', $category_id);
     return $stmt->execute();
   }
 
-  public function update()
+  public function update($id, $title, $description, $status, $user_id, $category_id)
   {
-    $query = "UPDATE " . $this->table_name . " 
-                  SET title=:title, description=:description, status=:status, user_id=:user_id, category_id=:category_id
+    $query = "UPDATE " . $this->table . " 
+                  SET title=:title, description=:description, status=:status, user_id=:user_id, category_id=:category_id 
                   WHERE id=:id";
     $stmt = $this->conn->prepare($query);
-
-    $stmt->bindParam(":title", $this->title);
-    $stmt->bindParam(":description", $this->description);
-    $stmt->bindParam(":status", $this->status);
-    $stmt->bindParam(":user_id", $this->user_id);
-    $stmt->bindParam(":category_id", $this->category_id);
-    $stmt->bindParam(":id", $this->id);
-
+    $stmt->bindParam(':id', $id);
+    $stmt->bindParam(':title', $title);
+    $stmt->bindParam(':description', $description);
+    $stmt->bindParam(':status', $status);
+    $stmt->bindParam(':user_id', $user_id);
+    $stmt->bindParam(':category_id', $category_id);
     return $stmt->execute();
   }
 
-  public function delete()
+  public function delete($id)
   {
-    $query = "DELETE FROM " . $this->table_name . " WHERE id = ?";
+    $query = "DELETE FROM " . $this->table . " WHERE id = :id";
     $stmt = $this->conn->prepare($query);
-    $stmt->bindParam(1, $this->id);
+    $stmt->bindParam(':id', $id);
     return $stmt->execute();
   }
 }
-?>

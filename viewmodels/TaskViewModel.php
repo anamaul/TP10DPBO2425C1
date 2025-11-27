@@ -5,90 +5,44 @@ require_once 'models/Category.php';
 
 class TaskViewModel
 {
-  private $db;
-  private $taskModel;
+  private $task;
+  private $user;
+  private $category;
 
-  public function __construct($db)
+  public function __construct()
   {
-    $this->db = $db;
-    $this->taskModel = new Task($db);
+    $this->task = new Task();
+    $this->user = new User();
+    $this->category = new Category();
+  }
+  public function getList()
+  {
+    return $this->task->getAll();
+  }
+  public function getById($id)
+  {
+    return $this->task->getById($id);
+  }
+  // Untuk Dropdown
+  public function getUsers()
+  {
+    return $this->user->getAll();
+  }
+  public function getCategories()
+  {
+    return $this->category->getAll();
   }
 
-  // Logic untuk menampilkan halaman utama
-  public function index()
+  public function add($title, $description, $status, $user_id, $category_id)
   {
-    $stmt = $this->taskModel->read();
-    $tasks = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    // Load view
-    include 'views/template/header.php';
-    include 'views/task/task_list.php';
-    include 'views/template/footer.php';
+    return $this->task->create($title, $description, $status, $user_id, $category_id);
   }
-
-  // Logic untuk menampilkan form tambah
-  public function create()
+  public function update($id, $title, $description, $status, $user_id, $category_id)
   {
-    // Ambil data user dan category untuk dropdown (Relasi)
-    $userModel = new User($this->db);
-    $categoryModel = new Category($this->db);
-
-    $users = $userModel->read()->fetchAll(PDO::FETCH_ASSOC);
-    $categories = $categoryModel->read()->fetchAll(PDO::FETCH_ASSOC);
-
-    include 'views/template/header.php';
-    include 'views/task/task_form.php';
-    include 'views/template/footer.php';
+    return $this->task->update($id, $title, $description, $status, $user_id, $category_id);
   }
-
-  // Logic untuk menampilkan form edit
-  public function edit($id)
-  {
-    $this->taskModel->id = $id;
-    $this->taskModel->readOne();
-    $task = $this->taskModel; // Data ter-bind ke object ini
-
-    // Dropdown data
-    $userModel = new User($this->db);
-    $categoryModel = new Category($this->db);
-    $users = $userModel->read()->fetchAll(PDO::FETCH_ASSOC);
-    $categories = $categoryModel->read()->fetchAll(PDO::FETCH_ASSOC);
-
-    include 'views/template/header.php';
-    include 'views/task/task_form.php';
-    include 'views/template/footer.php';
-  }
-
-  // Logic Simpan Data (Create/Update) dengan Data Binding
-  public function save()
-  {
-    // Simple Data Binding dari $_POST ke Model Properties
-    $this->taskModel->title = $_POST['title'];
-    $this->taskModel->description = $_POST['description'];
-    $this->taskModel->status = $_POST['status'];
-    $this->taskModel->user_id = $_POST['user_id'];
-    $this->taskModel->category_id = $_POST['category_id'];
-
-    if (isset($_POST['id']) && !empty($_POST['id'])) {
-      // Update
-      $this->taskModel->id = $_POST['id'];
-      if ($this->taskModel->update()) {
-        header("Location: index.php?page=tasks");
-      }
-    } else {
-      // Create
-      if ($this->taskModel->create()) {
-        header("Location: index.php?page=tasks");
-      }
-    }
-  }
-
   public function delete($id)
   {
-    $this->taskModel->id = $id;
-    if ($this->taskModel->delete()) {
-      header("Location: index.php?page=tasks");
-    }
+    return $this->task->delete($id);
   }
 }
-?>

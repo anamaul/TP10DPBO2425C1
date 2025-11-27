@@ -1,10 +1,10 @@
 <?php
 require_once "config/Database.php";
 
-class User
+class Comment
 {
   private $conn;
-  private $table = "users";
+  private $table = "comments";
 
   public function __construct()
   {
@@ -14,7 +14,9 @@ class User
 
   public function getAll()
   {
-    $query = "SELECT * FROM " . $this->table;
+    $query = "SELECT c.*, t.title as task_title 
+                  FROM " . $this->table . " c
+                  LEFT JOIN tasks t ON c.task_id = t.id";
     $stmt = $this->conn->prepare($query);
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -29,24 +31,22 @@ class User
     return $stmt->fetch(PDO::FETCH_ASSOC);
   }
 
-  public function create($name, $email, $role)
+  public function create($content, $task_id)
   {
-    $query = "INSERT INTO " . $this->table . " (name, email, role) VALUES (:name, :email, :role)";
+    $query = "INSERT INTO " . $this->table . " (content, task_id) VALUES (:content, :task_id)";
     $stmt = $this->conn->prepare($query);
-    $stmt->bindParam(':name', $name);
-    $stmt->bindParam(':email', $email);
-    $stmt->bindParam(':role', $role);
+    $stmt->bindParam(':content', $content);
+    $stmt->bindParam(':task_id', $task_id);
     return $stmt->execute();
   }
 
-  public function update($id, $name, $email, $role)
+  public function update($id, $content, $task_id)
   {
-    $query = "UPDATE " . $this->table . " SET name = :name, email = :email, role = :role WHERE id = :id";
+    $query = "UPDATE " . $this->table . " SET content=:content, task_id=:task_id WHERE id=:id";
     $stmt = $this->conn->prepare($query);
     $stmt->bindParam(':id', $id);
-    $stmt->bindParam(':name', $name);
-    $stmt->bindParam(':email', $email);
-    $stmt->bindParam(':role', $role);
+    $stmt->bindParam(':content', $content);
+    $stmt->bindParam(':task_id', $task_id);
     return $stmt->execute();
   }
 
