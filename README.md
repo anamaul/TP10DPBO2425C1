@@ -43,6 +43,12 @@ Berikut adalah struktur tabel yang digunakan dalam `db_taskmanager`:
 
 ---
 
+## 🖼️ Desain ERD
+
+<img width="1009" height="371" alt="image" src="https://github.com/user-attachments/assets/af68eda2-68d5-45ea-adb8-4f2260a397aa" />
+
+---
+
 ## 📝 Struktur Program (Arsitektur MVVM)
 
 Struktur kode dipisahkan berdasarkan tanggung jawabnya masing-masing:
